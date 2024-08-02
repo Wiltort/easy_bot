@@ -1,8 +1,12 @@
+from os import getenv
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import Optional, Any
 from pydantic_settings import BaseSettings
 from models.messages import Message
+
+
+URI = getenv("DATABASE_URL")
 
 
 class Settings(BaseSettings):
@@ -20,7 +24,7 @@ class Settings(BaseSettings):
 
 
 async def init():
-    client = AsyncIOMotorClient("mongodb://localhost:27017/")
+    client = AsyncIOMotorClient(URI)
     await init_beanie(
         database=client.mes_db,
         document_models=[Message,]

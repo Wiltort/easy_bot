@@ -19,3 +19,4 @@ async def add_message(mes: MessageCreate, request=Request) -> dict:
 async def retrieve_messages() -> List[Message]:
     messages = await message_database.get_all()
     return messages
+

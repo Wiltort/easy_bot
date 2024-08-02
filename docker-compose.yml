@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mongodb://127.0.0.1:4000/mes_db
+      - BOT_TOKEN=kakoitotoken
+
+  db:
+    image: mongo
+    ports:
+      - "4000:27017"
+  nginx:
+    build: ./nginx
+    ports:
+      - "443:443"
+    depends_on:
+      - web
+
