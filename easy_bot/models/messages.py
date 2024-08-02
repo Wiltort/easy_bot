@@ -3,6 +3,7 @@ from beanie import Document
 
 
 class Message(Document):
+    author: str
     text: str
 
     class Settings:
@@ -12,13 +13,14 @@ class Message(Document):
         "json_schema_extra": {
             "examples": [
                 {
+                    "author": "author username",
                     "text": "message text"
                 }
             ]
         }
     }
 
-#может не пригодится
+
 class MessageCreate(BaseModel):
     text: str
 

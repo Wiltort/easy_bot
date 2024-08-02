@@ -1,7 +1,6 @@
-from fastapi import APIRouter
-from ..models.messages import Message
-from beanie import PydanticObjectId
-from ..database.connection import Database
+from fastapi import APIRouter, Request
+from models.messages import Message, MessageCreate
+from database.connection import Database
 from typing import List
 
 api_router = APIRouter()
@@ -9,8 +8,10 @@ message_database = Database(Message)
 
 
 @api_router.post("/messages", status_code=201)
-async def add_message(mes: Message) -> dict:
-    await message_database.save(mes)
+async def add_message(mes: MessageCreate, request=Request) -> dict:
+    author = "Anonimous"
+    new_mes = Message(author=author, text=mes.text)
+    await message_database.save(new_mes)
     return {"message": "Message added successfully"}
 
 

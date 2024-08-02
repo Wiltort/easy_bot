@@ -1,9 +1,8 @@
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import Optional, Any
-from pydantic import BaseModel
-from pydantic_settings import BaseSettings, PydanticBaseSettingsSource
-from ..models.messages import Message
+from pydantic_settings import BaseSettings
+from models.messages import Message
 
 
 class Settings(BaseSettings):
@@ -19,10 +18,11 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
+
 async def init():
     client = AsyncIOMotorClient("mongodb://localhost:27017/")
     await init_beanie(
-        database=client.messages_db,
+        database=client.mes_db,
         document_models=[Message,]
     )
 
